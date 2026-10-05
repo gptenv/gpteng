@@ -1,0 +1,24 @@
+[package]
+name = "gpteng"
+version = "0.1.0"
+edition = "2024"
+description = "Native host and launcher for the libgpteng engine"
+license = "MIT"
+rust-version = "1.88"
+
+[dependencies]
+libgpteng = { path = "../libgpteng" }
+glam = "0.30"
+tokio = { version = "1", features = ["macros", "rt-multi-thread"] }
+winit = { version = "0.30", optional = true }
+wgpu = { version = "30", optional = true }
+pollster = { version = "0.4", optional = true }
+
+[features]
+default = ["mcp", "desktop-window", "scripting-lua"]
+mcp = ["libgpteng/mcp"]
+scripting-lua = ["libgpteng/scripting-lua"]
+desktop-window = ["dep:winit", "dep:wgpu", "dep:pollster", "scripting-lua"]
+
+[lints.rust]
+unsafe_code = "forbid"
